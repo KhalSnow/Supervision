@@ -42,7 +42,7 @@
                 label="操作">
                 <template slot-scope="scope">
                     <el-button @click="deleteItem(scope.row.id)" size="small">删除</el-button>
-                    <el-button @click="editItem(scope.row)" size="small">修改</el-button>
+                    <el-button @click="editItem([scope.row.id, scope.row.ip, scope.row.frequency, scope.row.receiver])" size="small">修改</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -51,7 +51,7 @@
             :visible.sync="editDialogVisible"
             width="30%"
             :before-close="handleEditClose">
-            <span><editForm @editChildValue="editChildData"></editForm></span>
+            <span><editForm @editChildValue="editChildData" :Form="[id, ip, frequency, receiver]"></editForm></span>
         </el-dialog>
     </div>
 </template>
@@ -65,6 +65,7 @@
     export default {
         data() {
             return {
+                id: "",
                 ip: "",
                 frequency: "",
                 receiver: "",
@@ -111,7 +112,11 @@
                     this.fetchData()
                 })
             },
-            editItem() {
+            editItem([id, ip, frequency, receiver]) {
+                this.id = id
+                this.ip = ip
+                this.frequency = frequency
+                this.receiver = receiver
                 this.editVisible()
             },
             handleEditClose() {
@@ -148,9 +153,7 @@
 
 <style>
     .addItem {
-        float:right
-    }
-    .fetchData {
-        float:right
+        float:right;
+        margin-bottom: 20px
     }
 </style>

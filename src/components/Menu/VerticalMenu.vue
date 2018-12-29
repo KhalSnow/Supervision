@@ -2,7 +2,11 @@
         <div>
             <el-row>
                 <el-col>
-                    <el-menu router>
+                    <el-menu 
+                        background-color="#E8E8E8"
+                        text-color="#686868"
+                        active-text-color="#000000"
+                        router>
                         <el-submenu index="programA">
                             <template slot="title">
                                 <span>项目一</span>
