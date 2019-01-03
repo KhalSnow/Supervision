@@ -1,10 +1,10 @@
 <template>
     <el-row type="flex" justify="center">
         <el-form ref="editForm" :rules="rules" :model="form" label-width="80px" status-icon>
-            <el-form-item label="域名">
+            <el-form-item label="域名" prop="ip">
                 <el-input v-model="form.ip" placeholder="请输入ip地址" clearable></el-input>
             </el-form-item>
-            <el-form-item label="监测频率">
+            <el-form-item label="监测频率" prop="frequency">
                 <el-select v-model="form.frequency" placeholder="请选择监测频率" clearable>
                     <el-option
                         v-for="item in options"
@@ -14,7 +14,7 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="接收人">
+            <el-form-item label="接收人" prop="receiver">
                 <el-input type="textarea" v-model="form.receiver" placeholder="请输入接收人姓名(如有多位接收人请用回车键分隔)" clearable></el-input>
             </el-form-item>
             <el-form-item>

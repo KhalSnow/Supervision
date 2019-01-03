@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from '@/views/layout/Layout.vue'
-import User from '@/components/User/User.vue'
+import Login from '@/components/Login/Login.vue'
+import store from '@/vuex/index'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -13,14 +14,10 @@ export default new Router({
       redirect: '/home',
       hidden: true
     },
-    // {
-    //   path: '/home',
-    //   component: Login
-    // },
-    // {
-    //   path: '/signup',
-    //   component: Signup
-    // },
+    {
+      path: '/login',
+      component: Login
+    },
     {
       path: '/user',
       meta: {
@@ -36,3 +33,5 @@ export default new Router({
     }
   ]
 })
+
+export default router

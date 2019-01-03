@@ -6,7 +6,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
         addDialogVisible: false,
-        editDialogVisible: false
+        editDialogVisible: false,
+        token: window.localStorage.getItem('token')
     },
     mutations: {
         addVisible: (state) => {
@@ -20,6 +21,15 @@ const store = new Vuex.Store({
         },
         editInvisible: (state) => {
             state.editDialogVisible = false
+        },
+        login: (state, data) => {
+            state.token = data
+            window.localStorage.setItem('token', data)
+        }
+    },
+    actions: {
+        login({ commit }, data){
+            commit('login', data)
         }
     }
 })

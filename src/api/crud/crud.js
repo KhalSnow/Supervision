@@ -4,6 +4,9 @@ export function getItem(params) {
     return request({
         url: '/users/get',
         method: 'get',
+        headers: {
+            'token': window.localStorage['token']
+        },
         params
     })
 }
@@ -27,6 +30,14 @@ export function deleteItem(data) {
 export function editItem(data) {
     return request({
         url: '/users/edit',
+        method: 'post',
+        data
+    })
+}
+
+export function logIn(data) {
+    return request({
+        url: '/login/login',
         method: 'post',
         data
     })

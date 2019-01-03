@@ -1,11 +1,11 @@
 <template>
     <el-row type="flex" justify="center">
         <el-form ref="addForm" :rules="rules" :model="form" label-width="80px">
-            <el-form-item label="域名">
-                <el-input v-model="form.ip" clearable placeholder="请输入ip地址"></el-input>
+            <el-form-item label="域名" prop="ip">
+                <el-input v-model="form.ip" placeholder="请输入ip地址" clearable></el-input>
             </el-form-item>
-            <el-form-item label="监测频率">
-                <el-select v-model="form.frequency" clearable placeholder="请选择监测频率">
+            <el-form-item label="监测频率" prop="frequency">
+                <el-select v-model="form.frequency" placeholder="请选择监测频率" clearable>
                     <el-option
                         v-for="item in options"
                         :key="item.value"
@@ -14,8 +14,8 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="接收人">
-                <el-input type="textarea" v-model="form.receiver" clearable placeholder="请输入接收人姓名(如有多位接收人请用回车键分隔)"></el-input>
+            <el-form-item label="接收人" prop="receiver">
+                <el-input type="textarea" v-model="form.receiver" placeholder="请输入接收人姓名(如有多位接收人请用回车键分隔)" clearable></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submit">提交</el-button>

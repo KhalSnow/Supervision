@@ -24,9 +24,9 @@
                 column-key="id">
             </el-table-column>
             <el-table-column
-                prop="ip"
+                prop="domain"
                 label="域名"
-                column-key="ip">
+                column-key="domain">
             </el-table-column>
             <el-table-column
                 prop="frequency"
@@ -42,7 +42,7 @@
                 label="操作">
                 <template slot-scope="scope">
                     <el-button @click="deleteItem(scope.row.id)" size="small">删除</el-button>
-                    <el-button @click="editItem([scope.row.id, scope.row.ip, scope.row.frequency, scope.row.receiver])" size="small">修改</el-button>
+                    <el-button @click="editItem([scope.row.id, scope.row.domain, scope.row.frequency, scope.row.receiver])" size="small">修改</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -51,7 +51,7 @@
             :visible.sync="editDialogVisible"
             width="30%"
             :before-close="handleEditClose">
-            <span><editForm @editChildValue="editChildData" :Form="[id, ip, frequency, receiver]"></editForm></span>
+            <span><editForm @editChildValue="editChildData" :Form="[id, domain, frequency, receiver]"></editForm></span>
         </el-dialog>
     </div>
 </template>
@@ -66,7 +66,7 @@
         data() {
             return {
                 id: "",
-                ip: "",
+                domain: "",
                 frequency: "",
                 receiver: "",
                 tableData: []
@@ -78,8 +78,25 @@
         methods: {
             fetchData() {
                 getItem().then(response => {
+                    console.log(response.data.code)
                     console.log(response.data.data)
-                    this.tableData = response.data.data
+                    if (response.data.code == 400) {
+                        this.$notify({
+                            type: 'error',
+                            message: '未登陆，请先登陆',
+                            duration: 2000
+                        })
+                        this.$router.replace("/login")
+                    } else if (response.data.code == 401) {
+                        this.$notify({
+                            type: 'error',
+                            message: '登陆过期，请重新登陆',
+                            duration: 2000
+                        })
+                        this.$router.replace("/login")
+                    } else {
+                        this.tableData = response.data.data
+                    }
                 })
             },
             cellStyle({ row, column, rowIndex, columnIndex }) {
@@ -112,9 +129,9 @@
                     this.fetchData()
                 })
             },
-            editItem([id, ip, frequency, receiver]) {
+            editItem([id, domain, frequency, receiver]) {
                 this.id = id
-                this.ip = ip
+                this.domain = domain
                 this.frequency = frequency
                 this.receiver = receiver
                 this.editVisible()
