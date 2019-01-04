@@ -1,11 +1,11 @@
 <template>
     <el-row type="flex" justify="center">
         <el-form ref="addForm" :rules="rules" :model="form" label-width="80px">
-            <el-form-item label="域名" prop="ip">
-                <el-input v-model="form.ip" placeholder="请输入ip地址" clearable></el-input>
+            <el-form-item label="域名" prop="domain">
+                <el-input v-model="form.domain" placeholder="请输入域名" clearable></el-input>
             </el-form-item>
-            <el-form-item label="监测频率" prop="frequency">
-                <el-select v-model="form.frequency" placeholder="请选择监测频率" clearable>
+            <el-form-item label="监测间隔" prop="intervals">
+                <el-select v-model="form.intervals" placeholder="请选择监测间隔" clearable>
                     <el-option
                         v-for="item in options"
                         :key="item.value"
@@ -14,8 +14,8 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="接收人" prop="receiver">
-                <el-input type="textarea" v-model="form.receiver" placeholder="请输入接收人姓名(如有多位接收人请用回车键分隔)" clearable></el-input>
+            <el-form-item label="接收人" prop="member">
+                <el-input type="textarea" v-model="form.member" placeholder="请输入接收人姓名(如有多位接收人请用回车键分隔)" clearable></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submit">提交</el-button>
@@ -35,33 +35,36 @@
             return {
                 form: {
                     id: "",
-                    ip: "",
-                    frequency: "",
-                    receiver: ""
+                    domain: "",
+                    intervals: "",
+                    member: ""
                 },
                 tableData: "",
                 options: [{
-                    value: '5min',
-                    label: '5min'
+                    value: '1',
+                    label: '1'
                 }, {
-                    value: '10min',
-                    label: '10min'
+                    value: '5',
+                    label: '5'
                 }, {
-                    value: '30min',
-                    label: '30min'
+                    value: '10',
+                    label: '10'
                 }, {
-                    value: '1h',
-                    label: '1h'
+                    value: '30',
+                    label: '30'
+                }, {
+                    value: '60',
+                    label: '60'
                 }],
                 value: '',
                 rules: {
-                    ip: [
-                        {required: true, message: "ip地址不能为空", trigger: "blur"}
+                    domain: [
+                        {required: true, message: "域名不能为空", trigger: "blur"}
                     ],
-                    frequency: [
-                        {required: true, message: "接收频率不能为空", trigger: "blur"}
+                    intervals: [
+                        {required: true, message: "接收间隔不能为空", trigger: "blur"}
                     ],
-                    receiver: [
+                    member: [
                         {required: true, message: '接收人不能为空', trigger: "blur"}
                     ]
                 }
@@ -71,8 +74,8 @@
             submit() {
                 this.$refs.addForm.validate((valid) => {
                     if (valid) {
-                        addItem({"id": this.form.id, "ip": this.form.ip, "frequency": this.form.frequency, "receiver": this.form.receiver}).then(response => {
-                            console.log(response.data.msg)
+                        addItem({"id": this.form.id, "domain": this.form.domain, "intervals": this.form.intervals, "member": this.form.member}).then(response => {
+                            //console.log(response.data.msg)
                         })
                         this.addInvisible()
                         getItem().then(response => {

@@ -1,11 +1,11 @@
 <template>
     <el-row type="flex" justify="center">
         <el-form ref="editForm" :rules="rules" :model="form" label-width="80px" status-icon>
-            <el-form-item label="域名" prop="ip">
-                <el-input v-model="form.ip" placeholder="请输入ip地址" clearable></el-input>
+            <el-form-item label="域名" prop="domain">
+                <el-input v-model="form.domain" placeholder="请输入域名" clearable></el-input>
             </el-form-item>
-            <el-form-item label="监测频率" prop="frequency">
-                <el-select v-model="form.frequency" placeholder="请选择监测频率" clearable>
+            <el-form-item label="监测间隔" prop="intervals">
+                <el-select v-model="form.intervals" placeholder="请选择监测间隔" clearable>
                     <el-option
                         v-for="item in options"
                         :key="item.value"
@@ -14,8 +14,8 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="接收人" prop="receiver">
-                <el-input type="textarea" v-model="form.receiver" placeholder="请输入接收人姓名(如有多位接收人请用回车键分隔)" clearable></el-input>
+            <el-form-item label="接收人" prop="member">
+                <el-input type="textarea" v-model="form.member" placeholder="请输入接收人姓名(如有多位接收人请用回车键分隔)" clearable></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submit">确定</el-button>
@@ -36,33 +36,36 @@
             return {
                 form: {
                     id: "",
-                    ip: "",
-                    frequency: "",
-                    receiver: ""
+                    domain: "",
+                    intervals: "",
+                    memeber: ""
                 },
                 tableData: "",
                 options: [{
-                    value: '5min',
-                    label: '5min'
+                    value: '1',
+                    label: '1'
                 }, {
-                    value: '10min',
-                    label: '10min'
+                    value: '5',
+                    label: '5'
                 }, {
-                    value: '30min',
-                    label: '30min'
+                    value: '10',
+                    label: '10'
                 }, {
-                    value: '1h',
-                    label: '1h'
+                    value: '30',
+                    label: '30'
+                }, {
+                    value: '60',
+                    label: '60'
                 }],
                 value: '',
                 rules: {
-                    ip: [
-                        {required: true, message: "ip地址不能为空", trigger: "blur"}
+                    domain: [
+                        {required: true, message: "域名不能为空", trigger: "blur"}
                     ],
-                    frequency: [
-                        {required: true, message: "接收频率不能为空", trigger: "blur"}
+                    intervals: [
+                        {required: true, message: "监测间隔不能为空", trigger: "blur"}
                     ],
-                    receiver: [
+                    member: [
                         {required: true, message: '接收人不能为空', trigger: "blur"}
                     ]
                 }
@@ -75,12 +78,12 @@
                 // this.form.receiver = this.Form[3]
                 this.$refs.editForm.validate((valid) => {
                     if (valid) {
-                        editItem({"id": this.Form[0], "ip": this.form.ip, "frequency": this.form.frequency, "receiver": this.form.receiver}).then(response => {
-                            console.log(response.data.msg)
+                        editItem({"id": this.Form[0], "domain": this.form.domain, "intervals": this.form.intervals, "member": this.form.member}).then(response => {
+                            //console.log(response.data.msg)
                         })
                         this.editInvisible()
                         getItem().then(response => {
-                            console.log(response.data.data)
+                            //console.log(response.data.data)
                             this.tableData = response.data.data
                             this.$emit("editChildValue", this.tableData)
                         })
@@ -100,9 +103,9 @@
         },
         watch: {
             form() {
-                this.form.ip = this.Form[1]
-                this.form.frequency = this.Form[2]
-                this.form.receiver = this.Form[3]
+                this.form.domain = this.Form[1]
+                this.form.intervals = this.Form[2]
+                this.form.member = this.Form[3]
             },
             immediate: true
         }
